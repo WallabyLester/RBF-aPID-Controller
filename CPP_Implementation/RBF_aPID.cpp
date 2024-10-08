@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cmath>
 
+
+
 class aPIDController {
 public:
     aPIDController(double kp, double ki, double kd, double dt)
@@ -22,6 +24,16 @@ private:
 };
 
 int main() {
+    // PID parameters
+    double Kp = 1.0, Ki = 0.1, Kd = 0.01, dt = 0.1;
+    
+    aPIDController apid(Kp, Ki, Kd, dt);
+
+    double target = 1.0, measured_value = 0.0;
+
+    double control_signal = apid.update(target, measured_value);
+
+    std::cout << "Output: " << control_signal << std::endl;
     
     return 0;
 }
