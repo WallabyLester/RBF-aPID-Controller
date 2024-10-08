@@ -19,4 +19,7 @@ The method has been implemented in three ways:
 
 ![Numpy](images/nump_impl.png "Numpy")
 
-3. C++ `CPP_Implementation`: Written in C++ (requiring `cmath`), for use on embedded systems.
+3. [CPP_Implementation](/CPP_Implementation/): Written in C++ (requiring `cmath`), for use on embedded systems.
+
+To build executable: `g++ RBF_aPID.cpp -o RBF_aPID.exe`\
+To run: `./RBF_aPID.exe`
