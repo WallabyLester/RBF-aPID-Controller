@@ -54,7 +54,6 @@ class RBFNetwork:
         Returns
         -------
         Height of Gaussian curve at x. 
-
         """
         return np.exp(-np.linalg.norm(x - center) ** 2 / (2 * self.sigma ** 2))
 

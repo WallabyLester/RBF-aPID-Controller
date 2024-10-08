@@ -16,7 +16,6 @@ class AdaptivePIDNP:
     rbf_network : RBFNetwork object
         RBF network class instance.
 
-
     Methods
     -------
     update(target, measured_value, dt):
