@@ -1,10 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from RBF_numpy import RBFNetwork
-from aPID_numpy import AdaptivePIDNP
-from RBF_tf import RBFAdaptiveModel, train_rbf_adaptive
-from aPID_tf import AdaptivePIDTf
+from NP_Implementation.RBF_numpy import RBFNetwork
+from NP_Implementation.aPID_numpy import AdaptivePIDNP
+from TF_Implementation.RBF_tf import RBFAdaptiveModel, train_rbf_adaptive
+from TF_Implementation.aPID_tf import AdaptivePIDTf
 
 def simulate_system(controller, target, dt, T):
     """ Simulate control model as first order system.

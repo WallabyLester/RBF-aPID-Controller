@@ -10,13 +10,13 @@ with simulated data can be found in `first_order_sim.py`
 
 The method has been implemented in three ways: 
 
-1. TensorFlow : Using TF to build and train the RBF Model.
+1. [TF_Implementation](/TF_Implementation/): Using TensorFlow to build and train the RBF Model.
 
 ![TensorFlow](images/tf_impl.png "TensorFlow")
 ![TF_Trained](images/trained.png "TF_Trained")
 
-2. Numpy: Using Numpy to build and train the RBF Model.
+2. [NP_Implementation](/NP_Implementation/): Using Numpy to build and train the RBF Model.
 
 ![Numpy](images/nump_impl.png "Numpy")
 
-3. C++: Written in C++ (requiring `cmath`), for use on embedded systems.
+3. C++ `CPP_Implementation`: Written in C++ (requiring `cmath`), for use on embedded systems.
