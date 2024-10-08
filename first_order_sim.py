@@ -118,3 +118,27 @@ if __name__ == "__main__":
     plt.legend()
     plt.grid()
     plt.show()
+
+    # Training RBF model with simulated data
+    rbf_tf = RBFAdaptiveModel(n_centers=5, input_dim=3)
+    rbf_tf.compile(optimizer="adam", loss="mean_squared_error")
+
+    apid_tf = AdaptivePIDTf(Kp=4.0, Ki=0.6, Kd=0.08, rbf_model=rbf_tf)
+
+    errors, control_signals = simulate_rbf_train_data(rbf_tf, apid_tf)
+    train_rbf_adaptive(rbf_tf, errors, control_signals, epochs=50)
+
+    target = 1.0
+    dt = 0.1
+    T = 10.0
+    time, measurements = simulate_system(apid_tf, target, dt, T)
+
+    plt.plot(time, measurements, label="Measured Value")
+    plt.axhline(y=target, color="r", linestyle="--", label="Target")
+    plt.ylim(max(measurements)-0.6, max(measurements)+0.1)
+    plt.xlabel("Time (s)")
+    plt.ylabel("Output")
+    plt.title("Adaptive RBF Neural PID Controller TF Trained")
+    plt.legend()
+    plt.grid()
+    plt.show()
