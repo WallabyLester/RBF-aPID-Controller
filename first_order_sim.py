@@ -1,10 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import tensorflow as tf
 
 from RBF_numpy import RBFNetwork
 from aPID_numpy import AdaptivePIDNP
-from RBF_tf import RBFAdaptiveModel
+from RBF_tf import RBFAdaptiveModel, train_rbf_adaptive
 from aPID_tf import AdaptivePIDTf
 
 def simulate_system(controller, target, dt, T):
@@ -27,16 +26,57 @@ def simulate_system(controller, target, dt, T):
     
     """
     time = np.arange(0, T, dt)
-    measured_value = 0
+    measured_value = 0.0
     measurements = []
 
     for t in time:
         control_signal = controller.update(target, measured_value, dt)
-        measured_value += (control_signal - measured_value) * dt  # Simple first-order system
+        measured_value += (control_signal - measured_value) * dt 
         measurements.append(measured_value)
         print(f"Control Signal: {control_signal:.2f}, Measurement: {measured_value:.2f}")
 
     return time, measurements
+
+def simulate_rbf_train_data(rbf_tf, apid_tf, n_epochs=100, n_samples=100):
+    """ Simulate training data using the RBF model and aPID.
+
+    Parameters
+    ----------
+        rbf_tf : RBFAdaptiveModel
+            RBF Adaptive Model class instance.
+        apid_tf : AdaptivePIDTf
+            Adaptive PID class instance.
+        n_epochs : int
+            Number of epochs to simulate.
+        n_samples : int
+            Number of samples per epoch to simulate.
+    
+    Returns
+    -------
+    Errors: [error, integral, derivative] and target control signals.
+    """
+    rbf_tf.compile(optimizer="adam", loss="mean_squared_error")
+
+    errors = []
+    control_signals = []
+
+    target = 1.0
+    measured_value = 0.0
+    dt = 0.1
+
+    for epoch in range(n_epochs):
+        print(f"Epoch: {epoch}")
+        for sample in range(n_samples):
+            control_signal = apid_tf.update(target, measured_value, dt)
+            measured_value += (control_signal - measured_value) * dt 
+            error = target - measured_value
+
+            errors.append([error, apid_tf.integral, apid_tf.derivative])
+            control_signals.append(control_signal)
+            print(f".", end="", flush=True)
+        print("")
+        
+    return np.array(errors), np.array(control_signals)
 
 if __name__ == "__main__":
     # numpy implementation
