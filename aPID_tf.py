@@ -1,44 +1,44 @@
-import numpy as np
+import tensorflow as tf
 
-class AdaptivePIDNP:
-    """ PID class implemented for numpy integration. 
+class AdaptivePIDTf:
+    """ PID class implemented for TensorFlow integration. 
 
     ...
 
     Attributes
     ----------
-    Kp : float64
+    Kp : float
         Proportional gain.
-    Ki : float64
+    Ki : float
         Integral gain.
-    Kd : float64
+    Kd : float
         Derivative gain.
-    rbf_network : RBFNetwork object
-        RBF network class instance.
+    rbf_model : RBFAdaptiveModel object
+        RBF adaptive model class instance.
 
     Methods
     -------
     update(target, measured_value, dt):
         Updates the control signal.    
     """
-    def __init__(self, Kp, Ki, Kd, rbf_network):
-        """ Constructs PID gains and RBF network.
+    def __init__(self, Kp, Ki, Kd, rbf_model):
+        """ Constructs PID gains, RBF model, and initial PID components.
 
         Parameters
         ----------
-            Kp : float64
+            Kp : float
                 Proportional gain.
-            Ki : float64
+            Ki : float
                 Integral gain.
-            Kd : float64
+            Kd : float
                 Derivative gain.
-            rbf_network : RBFNetwork object
-                RBF network class instance.
+            rbf_model : RBFAdaptiveModel object
+                RBF adaptive model class instance.
         """
         self.Kp = Kp
         self.Ki = Ki
         self.Kd = Kd
-        self.rbf_network = rbf_network
+        self.rbf_model = rbf_model
         self.prev_err = 0
         self.error = 0
         self.integral = 0
@@ -46,15 +46,15 @@ class AdaptivePIDNP:
 
     def update(self, target, measured_value, dt):
         """ Update the control signal according to error and adapt with RBF
-        network predictions. 
+        model predictions. 
 
         Parameters
         ----------
-            target : float64
+            target : float
                 Target setpoint.
-            measured_value : float64
+            measured_value : float
                 Actual value.
-            dt : float64
+            dt : float
                 Timestep.
 
         Returns
@@ -67,8 +67,8 @@ class AdaptivePIDNP:
 
         u = (self.Kp * self.error) + (self.Ki * self.integral) + (self.Kd*self.derivative)
 
-        gain_adapt = self.rbf_network.predict(np.array([self.error, self.integral, self.derivative]))
-        u += gain_adapt
+        control_signal_adapt = self.rbf_model(tf.constant([[self.error, self.integral, self.derivative]])).numpy().flatten()[0]
+        u += control_signal_adapt
 
         self.prev_err = self.error
         return u
