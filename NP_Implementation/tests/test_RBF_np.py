@@ -30,6 +30,8 @@ class TestRBFNetwork(unittest.TestCase):
         output_after = self.rbf_network.predict(self.x)
         self.assertIsInstance(output_after, float) 
         self.assertNotEqual(output_before, output_after)
+        if not abs(target - output_after) < abs(target - output_before):
+            print("Output did not move closer to the target after prediction.")
 
     def test_train(self):
         """Test the training function."""
