@@ -11,7 +11,8 @@ To adapt the PID gains instead of the control signal in TF, the network outputs
 must be made to 3 neurons and added to the gains. In Numpy, the gains will need to
 be added to inputs and the adapted signal added to the gains. 
 
-Example usage with simulated data can be found in [first_order_sim.py](first_order_sim.py). Tests
+Example usage with simulated data can be found in [first_order_sim.py](first_order_sim.py). 
+Training data was simulated using the model itself for the TF Trained example. Tests
 to be added. 
 
 ### C++ Implementation
@@ -27,7 +28,7 @@ management handled manually as the system it was designed for could not import a
 
 Example usage with simulated data can be found in [main.cpp](/CPP_Implementation/main.cpp). 
 It includes some additional libraries in order to show an example usage with a simple first 
-order simulation.
+order simulation. Training data was not simulated for the trained example, fake inputs were made.
 
 The project doesn't currently implement a CMake build as it was pulled from a greater build implementation. Tests for 
 the adaptive PID controller and RBF model are included using gtest.\
