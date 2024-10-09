@@ -3,10 +3,10 @@
 /**
  * @brief Constructor to initialize the RBF model.
  */
-RBFModel::RBFModel(int numCenters, int inputDim, double sigma, bool randomCenters) 
-    : numCenters(numCenters), inputDim(inputDim), sigma(sigma) {
-    centers = new double*[numCenters]; // Allocate memory for centers
-    weights = new double[numCenters]; // Allocate memory for weights
+RBFModel::RBFModel(int n_centers, int input_dim, double sigma, bool random_centers) 
+    : n_centers(n_centers), input_dim(input_dim), sigma(sigma) {
+    centers = new double*[n_centers]; // Allocate memory for centers
+    weights = new double[n_centers]; // Allocate memory for weights
 
     // Check if memory allocation was successful
     if (!centers || !weights) {
@@ -15,14 +15,14 @@ RBFModel::RBFModel(int numCenters, int inputDim, double sigma, bool randomCenter
     }
 
     // Initialize centers and weights
-    for (int i = 0; i < numCenters; ++i) {
-        centers[i] = new double[inputDim]; // Allocate memory for each center
-        if (randomCenters) {
-            for (int j = 0; j < inputDim; ++j) {
+    for (int i = 0; i < n_centers; ++i) {
+        centers[i] = new double[input_dim]; // Allocate memory for each center
+        if (random_centers) {
+            for (int j = 0; j < input_dim; ++j) {
                 centers[i][j] = static_cast<double>(rand()) / RAND_MAX; // Random centers
             }
         } else {
-            for (int j = 0; j < inputDim; ++j) {
+            for (int j = 0; j < input_dim; ++j) {
                 centers[i][j] = static_cast<double>(i); // Fixed centers
             }
         }
@@ -34,7 +34,7 @@ RBFModel::RBFModel(int numCenters, int inputDim, double sigma, bool randomCenter
  * @brief Destructor to free allocated memory.
  */
 RBFModel::~RBFModel() {
-    for (int i = 0; i < numCenters; ++i) {
+    for (int i = 0; i < n_centers; ++i) {
         delete[] centers[i]; // Free memory for each center inside centers
     }
     delete[] centers; // Free memory for centers
@@ -46,7 +46,7 @@ RBFModel::~RBFModel() {
  */
 double RBFModel::gaussian(const double* input, const double* center) {
     double norm = 0.0;
-    for (int i = 0; i < inputDim; ++i) {
+    for (int i = 0; i < input_dim; ++i) {
         norm += pow(input[i] - center[i], 2);
     }
     return exp(-0.5 * norm / (sigma * sigma));
@@ -57,7 +57,7 @@ double RBFModel::gaussian(const double* input, const double* center) {
  */
 double RBFModel::predict(const double* input) {
     double output = 0.0;
-    for (int i = 0; i < numCenters; ++i) {
+    for (int i = 0; i < n_centers; ++i) {
         output += weights[i] * gaussian(input, centers[i]);
     }
     return output;
@@ -66,10 +66,10 @@ double RBFModel::predict(const double* input) {
 /**
  * @brief Adapt weights based on the error and learning rate.
  */
-void RBFModel::adapt(double error, double learningRate, const double* input) {
-    for (int i = 0; i < numCenters; ++i) {
+void RBFModel::adapt(double error, double learning_rate, const double* input) {
+    for (int i = 0; i < n_centers; ++i) {
         double influence = gaussian(input, centers[i]); // Calculate influence based on input
-        weights[i] += learningRate * error * influence; // Update weight based on error and influence
+        weights[i] += learning_rate * error * influence; // Update weight based on error and influence
     }
 }
 
@@ -77,7 +77,7 @@ void RBFModel::adapt(double error, double learningRate, const double* input) {
  * @brief Get the weight at a specific index.
  */
 double RBFModel::get_weight(int index) const {
-    if (index < 0 || index >= numCenters) return 0.0;
+    if (index < 0 || index >= n_centers) return 0.0;
     return weights[index];
 }
 
@@ -85,6 +85,6 @@ double RBFModel::get_weight(int index) const {
  * @brief Set the weight at a specific index.
  */
 void RBFModel::set_weight(int index, double value) {
-    if (index < 0 || index >= numCenters) return;
+    if (index < 0 || index >= n_centers) return;
     weights[index] = value;
 }

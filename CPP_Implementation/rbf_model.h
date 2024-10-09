@@ -21,12 +21,12 @@ public:
      * of centers, input dimensions, and the spread (sigma) of the RBFs.
      * Random initialization of the centers can be turned off.
      * 
-     * @param num_centers The number of radial basis function centers.
+     * @param n_centers The number of radial basis function centers.
      * @param input_dim The dimensionality of the input data.
      * @param sigma The spread of the RBFs (default is 1.0).
      * @param random_centers Boolean to initialize centers randomly (default is true).
      */
-    RBFModel(int num_centers, int input_dim, double sigma = 1.0, bool random_centers = true);
+    RBFModel(int n_centers, int input_dim, double sigma = 1.0, bool random_centers = true);
     
     /**
      * @brief Destructor to free allocated memory.
@@ -69,7 +69,7 @@ public:
 private:
     double** centers; // 2D array for centers
     double* weights;  // Array of weights
-    int num_centers;   // Number of RBF centers
+    int n_centers;   // Number of RBF centers
     int input_dim;     // Dimension of the input
     double sigma;     // Spread of the RBF
 
