@@ -39,6 +39,22 @@ TEST_F(RBFModelTest, Predict_Output) {
     EXPECT_GT(output, 0.0); 
 }
 
+// Test adaptation of weights
+TEST_F(RBFModelTest, Adapt_Weights) {
+    double input[] = {1.0, 2.0, 3.0};
+    rbf->set_weight(0, 1.0); 
+    double error = 0.5; 
+    double learning_rate = 0.1;
+
+    double initial_weight = rbf->get_weight(0);
+    
+    rbf->adapt(error, learning_rate, input);
+    
+    double updated_weight = rbf->get_weight(0);
+
+    EXPECT_NE(updated_weight, initial_weight);
+}
+
 // Main function for running tests
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
