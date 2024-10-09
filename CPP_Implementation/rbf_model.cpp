@@ -72,3 +72,12 @@ void RBFModel::adapt(double error, double learningRate, const double* input) {
         weights[i] += learningRate * error * influence; // Update weight based on error and influence
     }
 }
+
+/**
+ * @brief Get the weight at a specific index.
+ */
+double RBFModel::get_weight(int index) const {
+    if (index < 0 || index >= numCenters) return 0.0;
+    return weights[index];
+}
+
