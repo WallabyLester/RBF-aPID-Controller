@@ -14,7 +14,7 @@ int main() {
     // Seed random number generator for reproducibility
     std::srand(static_cast<unsigned int>(std::time(0)));
 
-    const double Kp = 1.0, Ki = 0.1, Kd = 0.01, dt = 0.1;
+    const double Kp = 4.0, Ki = 2.0, Kd = 0.08, dt = 0.1;
 
     aPIDController apid(Kp, Ki, Kd, dt);
 
@@ -50,17 +50,21 @@ int main() {
     double inputs[] = {1.0, 0.1, 0.01, 1.0, 0.1, 0.01}; 
     double targets[] = {1.0, 1.0}; 
 
-    rbf.train(inputs, targets, 2, 100, 0.01);
+    aPIDController apid_new(1.0, 0.2, 0.08, dt);
+    RBFModel rbf_untrained(n_centers, input_dim, sigma, true);
+
+    rbf_untrained.train(inputs, targets, 2, 100, 0.01);
+    measured_value = 0.0;
 
     for (int step = 0; step < 100; ++step) {
         double error = target - measured_value;
 
-        double control_signal = apid.update(target, measured_value);
+        double control_signal = apid_new.update(target, measured_value);
 
-        double gains[3] = {apid.get_Kp(), apid.get_Ki(), apid.get_Kd()};
-        rbf.adapt(error, learning_rate, gains);
+        double gains[3] = {apid_new.get_Kp(), apid_new.get_Ki(), apid_new.get_Kd()};
+        rbf_untrained.adapt(error, learning_rate, gains);
 
-        control_signal += rbf.predict(gains);
+        control_signal += rbf_untrained.predict(gains);
         
         measured_value += simulate_system(control_signal, measured_value, dt);
 
