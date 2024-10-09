@@ -26,7 +26,6 @@ class TestAdaptivePIDNP(unittest.TestCase):
 
     def test_update(self):
         """Test the update method."""
-        
         control_signal = self.apid.update(self.target, self.measured_value, self.dt)
         
         self.assertIsInstance(control_signal, float)        
@@ -36,6 +35,16 @@ class TestAdaptivePIDNP(unittest.TestCase):
         control_signal_2 = self.apid.update(self.target, self.measured_value, self.dt)
         self.assertNotEqual(control_signal, control_signal_2)
 
-    
+    def test_integral_action(self):
+        """Test the integral action."""
+        self.apid.update(self.target, self.measured_value, self.dt)
+        prev_integral = self.apid.integral
+
+        measured_value = 9.0
+        self.apid.update(self.target, measured_value, self.dt)
+
+        self.assertGreater(self.apid.integral, prev_integral)
+        
+
 if __name__ == '__main__':
     unittest.main()
