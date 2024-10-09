@@ -34,12 +34,12 @@ public:
     ~RBFModel();
     
     /**
-     * @brief Evaluate the RBF output for a given input.
+     * @brief Predict the RBF output for a given input.
      * 
      * @param input A pointer to an array of input values.
      * @return The computed output of the RBF model.
      */
-    double evaluate(const double* input);
+    double predict(const double* input);
     
     /**
      * @brief Adapt weights based on the error and learning rate.
