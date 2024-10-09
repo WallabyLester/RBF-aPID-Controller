@@ -21,12 +21,12 @@ public:
      * of centers, input dimensions, and the spread (sigma) of the RBFs.
      * Random initialization of the centers can be turned off.
      * 
-     * @param numCenters The number of radial basis function centers.
-     * @param inputDim The dimensionality of the input data.
+     * @param num_centers The number of radial basis function centers.
+     * @param input_dim The dimensionality of the input data.
      * @param sigma The spread of the RBFs (default is 1.0).
-     * @param randomCenters Boolean to initialize centers randomly (default is true).
+     * @param random_centers Boolean to initialize centers randomly (default is true).
      */
-    RBFModel(int numCenters, int inputDim, double sigma = 1.0, bool randomCenters = true);
+    RBFModel(int num_centers, int input_dim, double sigma = 1.0, bool random_centers = true);
     
     /**
      * @brief Destructor to free allocated memory.
@@ -45,10 +45,10 @@ public:
      * @brief Adapt weights based on the error and learning rate.
      * 
      * @param error The difference between the desired output and the actual output.
-     * @param learningRate The rate at which the weights are adjusted.
+     * @param learning_rate The rate at which the weights are adjusted.
      * @param input A pointer to an array of input values used for adaptation.
      */
-    void adapt(double error, double learningRate, const double* input);
+    void adapt(double error, double learning_rate, const double* input);
     
     /**
      * @brief Get the weight at a specific index.
@@ -69,8 +69,8 @@ public:
 private:
     double** centers; // 2D array for centers
     double* weights;  // Array of weights
-    int numCenters;   // Number of RBF centers
-    int inputDim;     // Dimension of the input
+    int num_centers;   // Number of RBF centers
+    int input_dim;     // Dimension of the input
     double sigma;     // Spread of the RBF
 
     /**
