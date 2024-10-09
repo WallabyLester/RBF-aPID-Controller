@@ -55,5 +55,16 @@ class TestAdaptivePIDNP(unittest.TestCase):
 
         self.assertLess(self.apid.derivative, prev_derivative)
 
+    def test_adaptive_gain(self):
+        """Test that adaptive gain is applied correctly."""
+        
+        initial_control_signal = self.apid.update(self.target, self.measured_value, self.dt)
+        measured_value = self.measured_value + (initial_control_signal - self.measured_value) * self.dt 
+                
+        adjusted_control_signal = self.apid.update(self.target, measured_value, self.dt)
+        
+        self.assertNotEqual(initial_control_signal, adjusted_control_signal)
+        self.assertLess(self.target-measured_value, self.target-self.measured_value)
+
 if __name__ == '__main__':
     unittest.main()
