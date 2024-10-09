@@ -8,12 +8,11 @@
  * @class RBFModel
  * @brief Radial Basis Function (RBF) Model for function approximation.
  * 
- * This class implements an RBF model that evaluates outputs based
+ * This class implements an RBF model that predicts outputs based
  * on a set of radial basis functions centered at specified locations.
  */
 class RBFModel {
 public:
-
     /**
      * @brief Constructor to initialize the RBF model.
      * 
@@ -85,7 +84,7 @@ private:
     double sigma;     // Spread of the RBF
 
     /**
-     * @brief Gaussian function used in RBF evaluation.
+     * @brief Gaussian function used in RBF prediction.
      * 
      * @param input A pointer to an array of input values.
      * @param center A pointer to an array representing the center of the Gaussian function.

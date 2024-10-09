@@ -42,7 +42,7 @@ RBFModel::~RBFModel() {
 }
 
 /**
- * @brief Gaussian function used in RBF evaluation.
+ * @brief Gaussian function used in RBF prediction.
  */
 double RBFModel::gaussian(const double* input, const double* center) {
     double norm = 0.0;
