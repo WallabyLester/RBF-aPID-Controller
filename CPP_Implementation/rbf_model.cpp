@@ -51,3 +51,15 @@ double RBFModel::gaussian(const double* input, const double* center) {
     }
     return exp(-0.5 * norm / (sigma * sigma));
 }
+
+/**
+ * @brief Predict the RBF output for a given input.
+ */
+double RBFModel::predict(const double* input) {
+    double output = 0.0;
+    for (int i = 0; i < numCenters; ++i) {
+        output += weights[i] * gaussian(input, centers[i]);
+    }
+    return output;
+}
+
