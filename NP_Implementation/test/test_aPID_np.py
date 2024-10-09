@@ -44,7 +44,16 @@ class TestAdaptivePIDNP(unittest.TestCase):
         self.apid.update(self.target, measured_value, self.dt)
 
         self.assertGreater(self.apid.integral, prev_integral)
-        
+
+    def test_derivative_action(self):
+        """Test the derivative action."""
+        self.apid.update(self.target, self.measured_value, self.dt)
+        prev_derivative = self.apid.derivative
+
+        self.measured_value = 9.0
+        self.apid.update(self.target, self.measured_value, self.dt)
+
+        self.assertLess(self.apid.derivative, prev_derivative)
 
 if __name__ == '__main__':
     unittest.main()
