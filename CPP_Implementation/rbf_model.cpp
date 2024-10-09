@@ -63,3 +63,12 @@ double RBFModel::predict(const double* input) {
     return output;
 }
 
+/**
+ * @brief Adapt weights based on the error and learning rate.
+ */
+void RBFModel::adapt(double error, double learningRate, const double* input) {
+    for (int i = 0; i < numCenters; ++i) {
+        double influence = gaussian(input, centers[i]); // Calculate influence based on input
+        weights[i] += learningRate * error * influence; // Update weight based on error and influence
+    }
+}
