@@ -12,14 +12,20 @@ must be made to 3 neurons and added to the gains. In Numpy, the gains will need 
 be added to inputs and the adapted signal added to the gains. 
 
 Example usage with simulated data can be found in [first_order_sim.py](first_order_sim.py). 
-Training data was simulated using the model itself for the TF Trained example. Tests
-to be added. 
+Training data was simulated using the model itself for the TF Trained example. Each project
+has its own testing suite using `unittest`. The tests can be run with [run_np_tests.py](./NP_Implementation/run_np_tests.py)
+or [run_tf_test.py](./TF_Implementation/run_tf_tests.py).
+```
+# Run all tests from command line
+python -m unittest discover -s test -p "*.py" -v 
+```
 
 ### C++ Implementation
 A hybrid method; uses the error and PID gains (Kp, Ki, and Kd) to adapt the control signal. 
 This gives more flexibility to the control model as the gains can be easily adapted since 
 the RBF model already learns from them. The dual inputs should provide greater stability to
-the system, but will be more sensitive to the gains.
+the system, but will be more sensitive to the gains. This system also actively adapts during
+usage. 
 
 The C++ implementation can already be used for any adaptation, adding the result of `predict()` to
 whatever values are desired to adapt. Uses just the `cmath` and `cstdlib` libraries with memory 
@@ -31,7 +37,7 @@ It includes some additional libraries in order to show an example usage with a s
 order simulation. Training data was not simulated for the trained example, fake inputs were made.
 
 The project doesn't currently implement a CMake build as it was pulled from a greater build implementation. Tests for 
-the adaptive PID controller and RBF model are included using gtest.\
+the adaptive PID controller and RBF model are included using `gtest`.\
 An example manual compilation:
 ```
 // Build and run tests 
