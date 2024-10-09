@@ -14,21 +14,28 @@ class TestAdaptivePIDNP(unittest.TestCase):
         self.n_centers = 5
         self.rbf = RBFNetwork(self.input_dim, self.n_centers)
         self.apid = AdaptivePIDNP(Kp, Ki, Kd, self.rbf)
+        self.target = 10.0
+        self.measured_value = 8.0
+        self.dt = 0.1
+
+    def test_proportional_action(self):
+        """Test the proportional action."""
+        self.apid.update(self.target, self.measured_value, self.dt)
+
+        self.assertAlmostEqual(self.apid.error, self.target-self.measured_value)
 
     def test_update(self):
         """Test the update method."""
-        target = 10.0
-        measured_value = 8.0
-        dt = 0.1
         
-        control_signal = self.apid.update(target, measured_value, dt)
+        control_signal = self.apid.update(self.target, self.measured_value, self.dt)
         
         self.assertIsInstance(control_signal, float)        
         self.assertGreater(control_signal, 0)
         
-        measured_value = 9.0
-        control_signal_2 = self.apid.update(target, measured_value, dt)
+        self.measured_value = 9.0
+        control_signal_2 = self.apid.update(self.target, self.measured_value, self.dt)
         self.assertNotEqual(control_signal, control_signal_2)
 
+    
 if __name__ == '__main__':
     unittest.main()
