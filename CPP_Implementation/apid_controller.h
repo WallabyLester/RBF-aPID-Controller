@@ -11,6 +11,10 @@ public:
     void set_Ki(double ki) {Ki = ki;}
     void set_Kd(double kd) {Kd = kd;}
 
+    double get_Kp() const { return Kp; }
+    double get_Ki() const { return Ki; }
+    double get_Kd() const { return Kd; }
+
 private:
     double Kp, Ki, Kd, dt;
     double integral;  
