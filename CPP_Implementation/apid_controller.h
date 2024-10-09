@@ -3,9 +3,13 @@
 
 class aPIDController {
 public:
-    aPIDController(double kp, double ki, double kd, double dt);
+    aPIDController(double kp=0.0, double ki=0.0, double kd=0.0, double dt=0.1);
 
     double update(double target, double measured_value);
+
+    void set_Kp(double kp) {Kp = kp;}
+    void set_Ki(double ki) {Ki = ki;}
+    void set_Kd(double kd) {Kd = kd;}
 
 private:
     double Kp, Ki, Kd, dt;
