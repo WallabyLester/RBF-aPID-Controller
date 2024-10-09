@@ -29,3 +29,15 @@ RBFModel::RBFModel(int numCenters, int inputDim, double sigma, bool randomCenter
         weights[i] = 0.0; // Initialize weights to zero
     }
 }
+
+/**
+ * @brief Destructor to free allocated memory.
+ */
+RBFModel::~RBFModel() {
+    for (int i = 0; i < numCenters; ++i) {
+        delete[] centers[i]; // Free memory for each center inside centers
+    }
+    delete[] centers; // Free memory for centers
+    delete[] weights; // Free memory for weights
+}
+
