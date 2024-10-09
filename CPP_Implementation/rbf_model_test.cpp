@@ -55,6 +55,27 @@ TEST_F(RBFModelTest, Adapt_Weights) {
     EXPECT_NE(updated_weight, initial_weight);
 }
 
+// Test training function
+TEST_F(RBFModelTest, Train_Function) {
+    const int numSamples = 5;
+    double inputs[] = {
+        0.0, 0.0, 0.0,
+        1.0, 1.0, 1.0,
+        2.0, 2.0, 2.0,
+        3.0, 3.0, 3.0,
+        4.0, 4.0, 4.0
+    };
+    double targets[] = {0.0, 1.0, 0.0, 1.0, 0.0};
+    int numIterations = 200;
+    double learningRate = 0.01;
+
+    rbf->train(inputs, targets, numSamples, numIterations, learningRate);
+
+    for (int i = 0; i < n_centers; ++i) {
+        EXPECT_NE(rbf->get_weight(i), 0.0);
+    }
+}
+
 // Main function for running tests
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
