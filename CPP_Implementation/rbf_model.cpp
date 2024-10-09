@@ -41,3 +41,13 @@ RBFModel::~RBFModel() {
     delete[] weights; // Free memory for weights
 }
 
+/**
+ * @brief Gaussian function used in RBF evaluation.
+ */
+double RBFModel::gaussian(const double* input, const double* center) {
+    double norm = 0.0;
+    for (int i = 0; i < inputDim; ++i) {
+        norm += pow(input[i] - center[i], 2);
+    }
+    return exp(-0.5 * norm / (sigma * sigma));
+}
