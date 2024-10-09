@@ -81,3 +81,10 @@ double RBFModel::get_weight(int index) const {
     return weights[index];
 }
 
+/**
+ * @brief Set the weight at a specific index.
+ */
+void RBFModel::set_weight(int index, double value) {
+    if (index < 0 || index >= numCenters) return;
+    weights[index] = value;
+}
