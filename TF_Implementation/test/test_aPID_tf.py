@@ -42,6 +42,16 @@ class TestAdaptivePIDTf(unittest.TestCase):
         derivative = self.apid.derivative
         self.assertAlmostEqual(derivative, (self.target - self.measured_value)/self.dt)
 
+    def test_adaptation(self):
+        """ Test adaptation of the control signal."""
+        control_signal_before = self.apid.update(self.target, self.measured_value, self.dt)
+
+        measured_value = self.measured_value + (control_signal_before - self.measured_value) * self.dt
+
+        control_signal_after = self.apid.update(self.target, measured_value, self.dt)
+
+        self.assertNotEqual(control_signal_before, control_signal_after)
+        self.assertLess((self.target - measured_value), self.target - self.measured_value)
 
 if __name__ == '__main__':
     unittest.main()
