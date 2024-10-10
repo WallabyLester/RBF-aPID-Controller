@@ -36,20 +36,17 @@ Example usage with simulated data can be found in [main.cpp](/CPP_Implementation
 It includes some additional libraries in order to show an example usage with a simple first 
 order simulation. Training data was not simulated for the trained example, fake inputs were made.
 
-The project doesn't currently implement a CMake build as it was pulled from a greater build implementation. Tests for 
-the adaptive PID controller and RBF model are included using `gtest`.\
-An example manual compilation:
+The project uses CMake to build and create the main executable and test executable. Tests for the adaptive PID controller and RBF model are included using `gtest`.\
+An example CMake build:
 ```
-// Build and run tests 
-g++ -std=c++20 -o rbf_model_test rbf_model.cpp rbf_model_test.cpp -lgtest -lgtest_main -pthread -g -Wall
-g++ -std=c++20 -o apid_controller_test apid_controller.cpp apid_controller_test.cpp -lgtest -lgtest_main -pthread -g -Wall
+mkdir build/
+cd build
+cmake ..
+cmake --build .
+ctest               // Run CMake test executable (all tests as one)
 
-./apid_controller_test
-./rbf_model_test
-
-// Build and run control system
-g++ -std=c++20 -o control_system main.cpp apid_controller.cpp rbf_model.cpp -lgtest -lgtest_main -pthread -g -Wall
-./control_system
+./control_system    // Main executable with simulation output
+./model_tests       // Test executable to view all individual test outputs
 ```
 
 Simulation examples from the three implementations: 

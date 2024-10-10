@@ -75,9 +75,3 @@ TEST_F(RBFModelTest, Train_Function) {
         EXPECT_NE(rbf->get_weight(i), 0.0);
     }
 }
-
-// Main function for running tests
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}

@@ -93,8 +93,3 @@ TEST_F(aPIDControllerTest, Derivative_Action) {
     double expectedDerivative = (target - measured_value)/0.1 - (target - 5.0)/0.1; 
     EXPECT_NEAR(controlSignal, Kd * expectedDerivative, 1e-5); 
 }
-
-int main(int argc, char** argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
