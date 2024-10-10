@@ -16,7 +16,7 @@ Training data was simulated using the model itself for the TF Trained example. E
 has its own testing suite using `unittest`. The tests can be run with [run_np_tests.py](./NP_Implementation/run_np_tests.py)
 or [run_tf_test.py](./TF_Implementation/run_tf_tests.py).
 ```
-# Run all tests from command line
+# Run project tests separately from their implementations
 python -m unittest discover -s test -p "*.py" -v 
 ```
 
